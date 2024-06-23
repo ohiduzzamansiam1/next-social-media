@@ -15,7 +15,7 @@ import { AlignRight, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import LoadingIcon from "./common/LoadingIcon";
 
 const mobileMenus = [
@@ -71,22 +71,21 @@ function Navbar() {
         <ClerkLoading>
           <LoadingIcon />
         </ClerkLoading>
-        {mobileMenus.map((menu) => (
-          <React.Fragment key={menu.id}>
-            {menu.id !== 5 && user?.id && (
-              <Link
-                href={menu.href}
-                className={`text-sm ${
-                  pathname === menu.href
-                    ? "font-bold text-primary"
-                    : "text-neutral-500 hover:text-black transition"
-                }`}
-                key={menu.id}
-              >
-                {menu.name}
-              </Link>
-            )}
-          </React.Fragment>
+        {(user?.id
+          ? mobileMenus.filter((menu) => menu.id !== 5)
+          : mobileMenus
+        ).map((menu) => (
+          <Link
+            key={menu.id}
+            href={menu.href}
+            className={`text-sm ${
+              pathname === menu.href
+                ? "font-bold text-primary"
+                : "text-neutral-500 hover:text-black transition"
+            }`}
+          >
+            {menu.name}
+          </Link>
         ))}
 
         <ClerkLoaded>
@@ -139,23 +138,22 @@ function Navbar() {
                 "flex flex-col gap-5 w-full items-center justify-center h-full"
               }
             >
-              {mobileMenus.map((menu) => (
-                <React.Fragment key={menu.id}>
-                  {menu.id !== 5 && user?.id && (
-                    <Link
-                      href={menu.href}
-                      className={`text-lg font-semibold ${
-                        pathname !== menu.href
-                          ? "text-neutral-300 dark:text-white/50"
-                          : "text-primary font-bold"
-                      }`}
-                      onClick={() => setShowSheet(false)}
-                      key={menu.id}
-                    >
-                      {menu.name}
-                    </Link>
-                  )}
-                </React.Fragment>
+              {(user?.id
+                ? mobileMenus.filter((menu) => menu.id !== 5)
+                : mobileMenus
+              ).map((menu) => (
+                <Link
+                  href={menu.href}
+                  className={`text-lg font-semibold ${
+                    pathname !== menu.href
+                      ? "text-neutral-300 dark:text-white/50"
+                      : "text-primary font-bold"
+                  }`}
+                  onClick={() => setShowSheet(false)}
+                  key={menu.id}
+                >
+                  {menu.name}
+                </Link>
               ))}
             </div>
           </SheetContent>

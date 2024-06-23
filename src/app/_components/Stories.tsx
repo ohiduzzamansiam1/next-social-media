@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Stories() {
   return (
-    <div className="p-4 bg-white rounded-xl shadow-sm overflow-x-scroll no-scrollbar text-sm">
+    <div className="p-4 bg-white rounded-xl shadow-sm overflow-x-scroll text-sm">
       <div className="flex gap-8 min-w-max">
         {Array.from({ length: 10 }).map((_, i) => (
           <div

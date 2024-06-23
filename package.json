@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev:ngrok": "ngrok http 3000"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.1.6",
@@ -22,6 +23,7 @@
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
+    "svix": "^1.24.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"
   },

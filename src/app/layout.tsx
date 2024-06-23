@@ -19,10 +19,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={GeistSans.className}>
           <div className="flex flex-col h-dvh">
-            <div className="w-full bg-white md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+            <div className="w-full bg-white md:px-8 lg:px-16 xl:px-20 2xl:px-64">
               <Navbar />
             </div>
-            <div className="bg-slate-100 md:px-8 flex-grow lg:px-16 xl:px-32 2xl:px-64">
+            <div className="bg-slate-100 md:px-8 flex-grow lg:px-16 xl:px-20 2xl:px-64">
               {children}
             </div>
           </div>

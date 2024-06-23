@@ -41,7 +41,7 @@ export default function Post() {
           <Dialog>
             <DialogTrigger>
               <Image
-                src="https://images.pexels.com/photos/1327405/pexels-photo-1327405.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                src="https://images.pexels.com/photos/21937092/pexels-photo-21937092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt=""
                 className="object-cover rounded-xl"
                 quality={100}
@@ -51,7 +51,7 @@ export default function Post() {
             </DialogTrigger>
             <DialogContent className="h-full rounded-3xl">
               <Image
-                src="https://images.pexels.com/photos/1327405/pexels-photo-1327405.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                src="https://images.pexels.com/photos/21937092/pexels-photo-21937092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt=""
                 className="object-cover rounded-xl"
                 quality={100}
@@ -91,7 +91,9 @@ export default function Post() {
           <div
             className="flex items-center gap-4 bg-slate-100 p-2 px-4 rounded-full cursor-pointer select-none"
             onClick={() => {
-              document.getElementById(`comment_input_${comment_input_uniqueID}`)?.focus();
+              document
+                .getElementById(`comment_input_${comment_input_uniqueID}`)
+                ?.focus();
             }}
           >
             <Image
