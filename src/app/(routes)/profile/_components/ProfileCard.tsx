@@ -1,22 +1,39 @@
 import { Button } from "@/components/ui/button";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import prisma from "../../../../../prisma/db";
 
 export default async function ProfileCard() {
-  const clerkUser = await currentUser();
+  const { userId } = auth();
 
-  if (!clerkUser?.id) return;
+  if (!userId) return;
 
   const user = await prisma.user.findFirst({
     where: {
-      username: clerkUser.username ?? "",
+      id: userId,
     },
     include: {
       _count: {
         select: {
           followers: true,
+        },
+      },
+      followers: {
+        include: {
+          follower: {
+            include: {
+              followers: {
+                select: {
+                  follower: {
+                    select: {
+                      avatar: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -46,32 +63,19 @@ export default async function ProfileCard() {
       </div>
 
       <div className="h-22 flex flex-col gap-2 items-center mt-1">
-        <span className="font-semibold">
-          {user.name ?? user.username}
-        </span>
+        <span className="font-semibold">{user.name ?? user.username}</span>
         <div className="flex items-center gap-4">
           <div className="flex gap-1">
-            <Image
-              src={clerkUser?.imageUrl ?? ""}
-              alt=""
-              width={12}
-              height={12}
-              className="rounded-full size-3"
-            />
-            <Image
-              src={clerkUser?.imageUrl ?? ""}
-              alt=""
-              width={12}
-              height={12}
-              className="rounded-full size-3"
-            />
-            <Image
-              src={clerkUser?.imageUrl ?? ""}
-              alt=""
-              width={12}
-              height={12}
-              className="rounded-full size-3"
-            />
+            {user?.followers.map(({ follower }) => (
+              <Image
+                key={follower.id}
+                src={follower.avatar ?? ""}
+                alt=""
+                width={12}
+                height={12}
+                className="rounded-full size-3"
+              />
+            ))}
           </div>
           <span className="text-gray-600">
             {user?._count.followers} Followers

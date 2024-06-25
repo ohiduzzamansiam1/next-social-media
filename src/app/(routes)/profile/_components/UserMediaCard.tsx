@@ -1,8 +1,22 @@
 import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import prisma from "../../../../../prisma/db";
 
-export default function UserMediaCard({ user }: { user: User }) {
+export default async function UserMediaCard({ user }: { user: User }) {
+  const postsWithMedia = await prisma.post.findMany({
+    where: {
+      userId: user.id,
+      image: {
+        not: null,
+      },
+    },
+    take: 8,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
     <div className="p-4 bg-white rounded-xl shadow-sm flex flex-col gap-4">
       {/* TOP */}
@@ -15,16 +29,23 @@ export default function UserMediaCard({ user }: { user: User }) {
 
       {/* BOTTOM */}
       <div className="flex flex-wrap justify-between gap-4">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="relative w-1/5 h-20 2xl:h-24 cursor-pointer select-none">
-            <Image
-              src="https://images.pexels.com/photos/25403118/pexels-photo-25403118/free-photo-of-a-blue-teacup-with-pink-roses-on-top.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt=""
-              fill
-              className="object-cover rounded-md"
-            />
-          </div>
-        ))}
+        {postsWithMedia.length ? (
+          postsWithMedia.map((post, i) => (
+            <div
+              key={i}
+              className="relative w-1/5 h-20 2xl:h-24 cursor-pointer select-none"
+            >
+              <Image
+                src={post?.image ?? ""}
+                alt=""
+                fill
+                className="object-cover rounded-md"
+              />
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500 text-xs">No media found!</p>
+        )}
       </div>
     </div>
   );

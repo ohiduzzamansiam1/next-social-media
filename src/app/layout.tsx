@@ -1,4 +1,5 @@
 import Navbar from "@/app/_components/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -26,6 +27,7 @@ export default function RootLayout({
               {children}
             </div>
           </div>
+          <Toaster position="bottom-center" />
         </body>
       </html>
     </ClerkProvider>

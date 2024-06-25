@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import prisma from "../../../../../prisma/db";
+import UpdateProfile from "./UpdateProfile";
 import UserInfoInteraction from "./UserInfoInteraction";
 
 export default async function UserInfoCard({ user }: { user: User }) {
@@ -59,18 +60,28 @@ export default async function UserInfoCard({ user }: { user: User }) {
       {/* TOP */}
       <div className="flex items-center text-xs justify-between">
         <span className="text-gray-500">User Infromation</span>
-        <Link href="" className="text-blue-500 font-medium">
-          See all
-        </Link>
+        {user?.id !== clerkUser?.id ? (
+          <Link href="" className="text-blue-500 font-medium">
+            See all
+          </Link>
+        ) : (
+          <UpdateProfile user={user} />
+        )}
       </div>
 
       {/* USER INFOs & ACTIONS */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-2">
-          <p className="text-xl text-neutral-800 font-semibold">
-            Ohiduzzaman Siam
-          </p>
-          <span className="text-sm text-muted-foreground">@marguerite</span>
+      <div className="flex flex-col gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <p className="text-xl text-neutral-800 font-semibold line-clamp-1">
+              {user?.name || user?.username}
+            </p>
+            <span className="text-sm text-muted-foreground line-clamp-1">
+              @{user?.username}
+            </span>
+          </div>
+
+          <span className="text-xs font-medium text-muted-foreground">{user?.description}</span>
         </div>
 
         {/* SMALL DETAILS */}
@@ -106,12 +117,15 @@ export default async function UserInfoCard({ user }: { user: User }) {
           )}
         </div>
 
-        <div className="flex items-center justify-between *:text-neutral-600 text-xs">
+        <div className="flex items-center justify-between *:text-neutral-600 text-xs gap-2">
           {user?.website && (
             <p className="flex gap-2 items-center">
               <LinkIcon className="size-3" />
-              <Link href={"/"} className="text-blue-500 font-semibold">
-                siam.dev
+              <Link
+                href={user?.website}
+                className="text-blue-500 font-semibold line-clamp-1"
+              >
+                {user?.website?.replace(/^https?:\/\//, "")}
               </Link>
             </p>
           )}
@@ -122,7 +136,7 @@ export default async function UserInfoCard({ user }: { user: User }) {
           </p>
         </div>
 
-        {/* {user?.id !== clerkUser?.id && ( */}
+        {user?.id !== clerkUser?.id && (
           <UserInfoInteraction
             userId={user?.id}
             clerkUserId={clerkUser?.id ?? ""}
@@ -130,7 +144,7 @@ export default async function UserInfoCard({ user }: { user: User }) {
             isFollowing={isFollowing}
             isFollowingRequestSent={isFollowingRequestSent}
           />
-        {/* )} */}
+        )}
       </div>
     </div>
   );

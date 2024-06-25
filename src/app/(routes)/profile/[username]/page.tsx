@@ -29,21 +29,6 @@ async function ProfileRoute({ params }: { params: { username: string } }) {
 
   if (!user) redirect("/");
 
-  // await prisma.block
-  //   .findFirst({
-  //     where: {
-  //       blockerId: clerkUser.id,
-  //       blockedId: user.id,
-  //     },
-  //   })
-  //   .then((data) => {
-  //     if (data) redirect("/");
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //     redirect("/");
-  //   });
-
   return (
     <div className="h-full flex gap-6 py-3 px-3 lg:px-0">
       <div className="hidden xl:block w-[20%]">
@@ -72,15 +57,15 @@ async function ProfileRoute({ params }: { params: { username: string } }) {
             {user?.name ?? user?.username}
           </h1>
           <div className="flex gap-10 mb-3">
-            <div className="text-center text-sm font-semibold text-neutral-600">
+            <div className="text-center text-xs font-semibold text-neutral-600">
               <p>{kFormatter(user?._count?.post)}</p>
               <p>Posts</p>
             </div>
-            <div className="text-center text-sm font-semibold text-neutral-600">
+            <div className="text-center text-xs font-semibold text-neutral-600">
               <p>{kFormatter(user?._count?.followers)}</p>
               <p>Followers</p>
             </div>
-            <div className="text-center text-sm font-semibold text-neutral-600">
+            <div className="text-center text-xs font-semibold text-neutral-600">
               <p>{kFormatter(user?._count?.following)}</p>
               <p>Following</p>
             </div>
